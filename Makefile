@@ -20,7 +20,7 @@ $(TARGETS): $(OFILES)
 	$(CC) $(CFLAGS) -o $(TARGETS) $(OFILES)
 
 run: $(TARGETS)
-	@./$(TARGETS)
+	@./$(TARGETS) 
 
 clean:
 	@rm -rf $(TARGETS) *.out $(TARGETS).exe *.o

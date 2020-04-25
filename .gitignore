@@ -2,4 +2,7 @@
 *.o
 
 # Executables
-*.out
+*.out 
+
+# Text files
+*.txt

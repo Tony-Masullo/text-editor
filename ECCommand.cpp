@@ -63,5 +63,3 @@ bool ECCommandHistory :: Redo(){
     }
     return true;
 }
-
-
