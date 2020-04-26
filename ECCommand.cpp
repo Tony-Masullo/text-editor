@@ -19,28 +19,28 @@ ECCommandHistory :: ECCommandHistory()
 ECCommandHistory :: ~ECCommandHistory()
 {
   // your code goes here
-  while (!(this->editingHistory.empty())){
-    this->editingHistory.pop();
+  while (!(m_editingHistory.empty())){
+    m_editingHistory.pop();
   }
-  while (!(this->undoHistory.empty())){
-    this->undoHistory.pop();
+  while (!(m_undoHistory.empty())){
+    m_undoHistory.pop();
   }
 }
 
 void ECCommandHistory :: ExecuteCmd(ECCommand *pCmd){
   pCmd->Execute();
-  this->editingHistory.push(pCmd);
-  while(!(this->undoHistory.empty())){
-    this->undoHistory.pop();
+  m_editingHistory.push(pCmd);
+  while(!(m_undoHistory.empty())){
+    m_undoHistory.pop();
   }
 }
 
 bool ECCommandHistory :: Undo(){
     try{
-        ECCommand *unexecuteThis = this->editingHistory.top();
+        ECCommand *unexecuteThis = m_editingHistory.top();
         unexecuteThis->UnExecute();
-        this->undoHistory.push(unexecuteThis);
-        this->editingHistory.pop();
+        m_undoHistory.push(unexecuteThis);
+        m_editingHistory.pop();
     }
     catch (exception& e){
         return false;
@@ -52,10 +52,10 @@ bool ECCommandHistory :: Undo(){
 
 bool ECCommandHistory :: Redo(){
     try {
-        ECCommand * reexecuteThis = this->undoHistory.top();
+        ECCommand * reexecuteThis = m_undoHistory.top();
         reexecuteThis->Execute();
-        this->editingHistory.push(reexecuteThis);
-        this->undoHistory.pop();
+        m_editingHistory.push(reexecuteThis);
+        m_undoHistory.pop();
     }
     catch (exception& e){
         return false;

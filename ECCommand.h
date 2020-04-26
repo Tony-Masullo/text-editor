@@ -39,8 +39,8 @@ public:
     
 private:
     // your code goes here
-    stack<ECCommand *> editingHistory;
-    stack<ECCommand *> undoHistory;
+    stack<ECCommand *> m_editingHistory;
+    stack<ECCommand *> m_undoHistory;
 
 };
 

@@ -19,14 +19,15 @@ public:
     void EnterAt();                    
     bool Undo();  
     bool Redo(); 
+    void readFromFile();
     void writeToFile();
 private:
-    ECTextViewImp *window;
-    vector<string> rows;
-    int cursorX;
-    int cursorY;
-    ECCommandHistory histCmds;
-    string fileName;
+    ECTextViewImp *m_window;
+    vector<string> m_rows;
+    int m_cursorX;
+    int m_cursorY;
+    ECCommandHistory m_histCmds;
+    string m_fileName;
 };   
 
 
@@ -39,10 +40,10 @@ public:
     void Execute();
     void UnExecute();
 private:
-    char charToIns;
-    int &cursorX;
-    int &cursorY;
-    vector<string> &rows;
+    char m_charToIns;
+    int &m_cursorX;
+    int &m_cursorY;
+    vector<string> &m_rows;
 };
 
 class removeTextAtCommand : public ECCommand
@@ -52,11 +53,11 @@ public:
     void Execute();
     void UnExecute();
 private:
-    char previousChar;
-    int lastPos;
-    int &cursorX;
-    int &cursorY;
-    vector<string> &rows;
+    char m_previousChar;
+    int m_lastPos;
+    int &m_cursorX;
+    int &m_cursorY;
+    vector<string> &m_rows;
 };
 
 class enterAtCommand : public ECCommand
@@ -66,8 +67,8 @@ public:
     void Execute();
     void UnExecute();
 private:
-    string stringToMove;
-    int &cursorX;
-    int &cursorY;
-    vector<string> &rows;
+    string m_stringToMove;
+    int &m_cursorX;
+    int &m_cursorY;
+    vector<string> &m_rows;
 };
