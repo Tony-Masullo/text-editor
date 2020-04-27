@@ -11,10 +11,13 @@ ECClient :: ECClient(ECTextViewImp *wndw, string fileName)
     m_window = wndw;
     m_window->Init();
     m_window->Attach(this);
+    m_viewWidth = m_window->GetColNumInView();
+    m_viewHeight = m_window->GetRowNumInView();
     /* yufeng has weird bug where first row is shifted up each time. 
        so add black status row so entered text is in right spot */
     m_window->AddStatusRow("","", false);
     m_fileName = fileName;
+    //this->addPage();
     // if file run exists, read from it, and populate view
     this->readFromFile();
     // After blank row entered, enter loop to take keyboard input until ctrl-q hit
@@ -31,7 +34,7 @@ void ECClient :: Update(){
 
     // delegate command handling to handler
     this->HandleCommand(pressedKey);
-    // the update is done, so set new cursor positions, and show the new text in the view
+    // // the update is done, so set new cursor positions, and show the new text in the view
     m_window->SetCursorY(m_cursorY);
     m_window->SetCursorX(m_cursorX);
     for (string row: m_rows){
@@ -153,7 +156,42 @@ void ECClient ::writeToFile()
     outFile.close();
 }
 
+void ECClient ::addPage(){
+    m_pages.push_back(ECPage(this));
+    m_currPage++;
+}
 
+void ECClient ::insertIntoPage(char charToIns){
+    m_currPage->insertIntoParagraph(charToIns);
+}
+
+// Implements ECPage
+ECPage ::ECPage(ECClient *client){
+    m_client = client;
+}
+void ECPage ::addParagraph(){
+    m_paragraphs.push_back(ECParagraph(this));
+}
+void ECPage ::insertIntoParagraph(char charToIns){
+    //m_currParagraph->insertIntoRow(charToIns);
+}
+void ECPage ::paragraphUP(){
+    m_currParagraph--;
+}
+void ECPage ::paragraphDOWN(){
+    m_currParagraph++;
+}
+
+// Implements ECParagraph
+ECParagraph ::ECParagraph(ECPage *page){
+    m_page = page;
+}
+void ECParagraph ::rowUP(){
+    m_currRow--;
+}
+void ECParagraph ::rowDOWN(){
+    m_currRow++;
+}
 
 // **********************************************************
 // Commands
